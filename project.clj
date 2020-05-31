@@ -4,7 +4,8 @@
   :license {:name "Eclipse Public License"
             :url  "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.10.0"]
-                 [junit/junit "4.12"]]
+                 [junit/junit "4.12"]
+                 [org.clojure/core.async "1.2.603"]]
   :main ^:skip-aot com.github.zjjfly.clojoy.core
   :plugins [[lein-cljfmt "0.5.7"]
             [lein-junit "1.1.8"]]
