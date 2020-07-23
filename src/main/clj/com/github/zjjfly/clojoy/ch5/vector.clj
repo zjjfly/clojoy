@@ -1,4 +1,5 @@
-(ns com.github.zjjfly.clojoy.ch5.vector)
+(ns com.github.zjjfly.clojoy.ch5.vector
+  (:import (clojure.lang PersistentQueue)))
 
 ;vector是clojure中最常用的集合,无论数据量多还是少,它的性能都很好
 ;它更常用的原因大概是clojure中的括号已经够多了吧😹.
@@ -107,7 +108,62 @@
 ;使用peek获取栈顶元素,last也可以做到同样的是,但vector作为栈,在语义上还是使用peek更好,而且peek效率更高
 (peek my-stack)
 ;3
-;conj用于在vector右边添加一个元素
+;conj用于在栈中添加元素,这个函数可以用于其他持久化集合类型
 (conj my-stack 4)
 ;[1 2 3 4]
 ;list也实现了clojure.lang.IPersistentStack,但它认为的栈顶是list的最左边,这和vector是相反的
+
+;vector可以高效的在右边添加元素,并从左到右遍历,这个特性让clojure中很少使用reverse这个函数,这不同于传统的lisp
+;传统的lisp的做法:
+(defn strict-map1 [f coll]
+  (loop [coll coll
+         acc nil]
+    (if (empty? coll)
+      (reverse acc)
+      (recur (next coll)
+             (cons (f (first coll)) acc)))))
+(strict-map1 - (range 5))
+;(0 -1 -2 -3 -4)
+;clojure的做法
+(defn strict-map2 [f coll]
+  (loop [coll coll
+         acc []]
+    (if (empty? coll)
+      acc
+      (recur (next coll)
+             (conj acc (f (first coll)))))))
+(strict-map2 - (range 5))
+;[0 -1 -2 -3 -4]
+
+;subvec可以从已有的vector中生成一个子vector
+;它有两个参数,第一个是起始的index,它包含在子vector中,第二个是结束的index,它不包含在子vector
+(subvec [1 2 3 4 5] 1 4)
+;[2 3 4]
+;子vector持有的引用是原有的vector的,子vector的子vector也是如此
+
+;clojure中,遍历map的迭代器是seq,它的每一项的类型是MapEntity,它实际上是vector
+(first {:width 10 :height 20 :depth 15})
+;[:width 10]
+(vector? (first {:width 10 :height 20 :depth 15}))
+;true
+;所以MapEntity可以使用vector支持的所有函数,包括conj,get,甚至解构
+(doseq [[dimension amount] {:width 10 :height 20 :depth 15}]
+  (println (str (name dimension) ":") amount "inches"))
+;width: 10 inches
+;height: 20 inches
+;depth: 15 inches
+
+;MapEntity有key和val两个函数,获取键和值.但最常用的还是解构
+(key (first {:width 10 :height 20 :depth 15}))
+;:width
+(val (first {:width 10 :height 20 :depth 15}))
+;10
+
+;vector不适用的场景:
+;1.不适合作为稀疏矩阵,因为它无法略过一些索引,在更高的索引中插入值
+;2.它不可以在已有的值当中插入或删除值(可以删除最后的一个)
+;3.它不适合作为队列.因为如果使用rest或next得到弹出一个值之后的集合,那么这个集合的类型不是vector
+;需要用into或vec转回vector.如果使用subvec,那么得到的的vector底层还是使用的原来的vector,弹出的值不会被垃圾回收
+;4.它无法使用contains函数来判断是否含有某个值,因为它查找的键,而不是值
+(contains? [1 2 3 4] 0)
+;true

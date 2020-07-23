@@ -80,6 +80,4 @@ inc a"]
   (jnz a -1)
   ;(:a heap)
   ;(macroexpand '(jnz a -1))
-  )
-
-
+)
