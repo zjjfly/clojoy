@@ -1,5 +1,6 @@
 (ns com.github.zjjfly.clojoy.ch5.set
-  (:require [clojure.set :as cset]))
+  (:require [clojure.set :as cset]
+            [com.github.zjjfly.clojoy.utils.assert :as assert]))
 
 ;clojure的set和数学意义上的set一致,其中的元素无序且唯一
 ;它可以作为函数,测试某个值是否在set中,如果不在返回nil
@@ -35,17 +36,12 @@
 (sorted-set [3 4] [1 2])
 ;#{[1 2] [3 4]}
 ;sorted-set接受的参数之间必须是可以比较的,否则会报错
-(try
-  (sorted-set :a 1)
-  (catch Exception e
-    (assert (not (nil? e)))))
+(assert/assert-error ClassCastException (sorted-set :a 1))
+;form throws a java.lang.ClassCastException(clojure.lang.Keyword cannot be cast to java.lang.Number)
 ;这一点在使用已有的sorted set的时候会很明显的显示出来
 (def my-set (sorted-set :a :b))
-(try
-  (conj my-set 1)
-  (catch Exception e
-    (.getMessage e)))
-;java.lang.ClassCastException: clojure.lang.Keyword cannot be cast to java.lang.Number
+(assert/assert-error ClassCastException (conj my-set 1))
+;form throws a java.lang.ClassCastException(clojure.lang.Keyword cannot be cast to java.lang.Number)
 ;这个错误会让人很困惑,特别是当sorted set的生成和操作在代码中离的比较远的时候
 ;要防止这个错误可以使用sorted-set-by,提供自己的比较器,sorted-map-by的作用也是类似的
 

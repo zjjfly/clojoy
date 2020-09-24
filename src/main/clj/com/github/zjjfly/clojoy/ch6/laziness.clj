@@ -1,4 +1,6 @@
-(ns com.github.zjjfly.clojoy.ch6.laziness)
+(ns com.github.zjjfly.clojoy.ch6.laziness
+  (:require
+    [com.github.zjjfly.clojoy.utils.assert :as assert]))
 
 ;clojure的惰性体现在处理序列类型的方式
 
@@ -37,11 +39,8 @@
 (rec-step [1 2 3 4])
 ;=>[1 [2 [3 [4 []]]]]
 ;试一个大一点的序列
-(try
-  (rec-step (range 200000))
-  (catch Throwable e
-    (println (class e))))
-;=>java.lang.StackOverflowError
+(assert/assert-error StackOverflowError (rec-step (range 200000)))
+;form throws a java.lang.StackOverflowError()
 
 ;使用clojure的lazy-seq可以避免栈溢出问题,使用它有四个注意点:
 ;1.使用lazy-seq在产生序列的表达式的最外层

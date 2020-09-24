@@ -1,4 +1,6 @@
-(ns com.github.zjjfly.clojoy.ch5.map)
+(ns com.github.zjjfly.clojoy.ch5.map
+  (:require
+    [com.github.zjjfly.clojoy.utils.assert :as assert]))
 
 ;clojure中的map用于存储带名的值,最常见的是hash map,map字面量产生的就是hash map,它是无序的
 ;另一种生成hash map的方法
@@ -42,11 +44,9 @@
 (sorted-map-by #(compare (subs %1 1) (subs %2 1)) "bac" 2 "abc" 9)
 ;{"bac" 2, "abc" 9}
 ;和sorted-set一样,如果sorted-map传入的key是不能比较的,会报错
-(try
-  (sorted-map :a 1 "b" 2)
-  (catch Exception e
-    (.getMessage e)))
-;clojure.lang.Keyword cannot be cast to java.lang.String
+(assert/assert-error ClassCastException
+                     (sorted-map :a 1 "b" 2))
+;form throws a java.lang.ClassCastException(clojure.lang.Keyword cannot be cast to java.lang.String)
 
 ;可以使用subseq和rsubseq来截取sorted map中某个key之后或之前的元素,它们也适用于sorted set
 ;这个key不一定要存在,subseq会找到最接近它的key

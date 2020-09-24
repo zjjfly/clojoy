@@ -1,5 +1,6 @@
 (ns com.github.zjjfly.clojoy.ch5.vector
-  (:import (clojure.lang PersistentQueue)))
+  (:require
+    [com.github.zjjfly.clojoy.utils.assert :as assert]))
 
 ;vector是clojure中最常用的集合,无论数据量多还是少,它的性能都很好
 ;它更常用的原因大概是clojure中的括号已经够多了吧😹.
@@ -30,11 +31,9 @@
 ;这种vector在放入新元素的时候,放入的元素会被强制转换成初始化的时候指定的原始类型
 (into (vector-of :char) [100 101 102])
 ;[\d \e \f]
-(try
-  (into (vector-of :int) [1 2 5412414145677946894501515])
-  (catch Exception e
-    (.getMessage e)))
-;"Value out of range for long: 5412414145677946894501515"
+(assert/assert-error IllegalArgumentException
+                     (into (vector-of :int) [1 2 5412414145677946894501515]))
+;orm throws a java.lang.IllegalArgumentException(Value out of range for long: 5412414145677946894501515)
 
 ;大vector对于在集合右端添加删除,通过数字索引访问或修改元素以及反向遍历依然是很高效的
 (def a-to-j (vec (map char (range 65 75))))
@@ -48,11 +47,8 @@
 ;这三种首推nth,它不会当vector是nil的时候抛出异常,会在越界的时候抛出异常,并支持未找的默认值
 (nth nil 1)
 ;nil
-(try
-  (nth [1 2 3] 3)
-  (catch Exception e
-    (.getMessage e)))
-;nil
+(assert/assert-error IndexOutOfBoundsException (nth [1 2 3] 3))
+;form throws a java.lang.IndexOutOfBoundsException()
 (nth [] 1 :woops)
 ;:woops
 
