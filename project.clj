@@ -17,5 +17,9 @@
   :resource-paths ["src/main/resources"]
   :test-paths ["src/test/clj"]
   :junit ["src/test/java"]
-  :profiles {:uberjar {:aot :all}}
+  :profiles {:uberjar {:aot :all}
+             :kaocha {:dependencies [[lambdaisland/kaocha "1.0.700"]
+                                     [org.clojure/test.check "1.1.0"]
+                                     ]}}
+  :aliases {"kaocha" ["with-profile" "+kaocha" "run" "-m" "kaocha.runner"]}
   )
