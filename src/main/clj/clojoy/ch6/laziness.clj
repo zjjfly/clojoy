@@ -1,6 +1,6 @@
 (ns clojoy.ch6.laziness
   (:require
-    [clojoy.utils.assert :as assert]))
+   [clojoy.utils.assert :as assert]))
 
 ;clojure的惰性体现在处理序列类型的方式
 
@@ -67,9 +67,9 @@
 (defn lz-rec-step
   [s]
   (lazy-seq
-    (if (seq s)
-      (cons (first s) [(lz-rec-step (rest s))])
-      [])))
+   (if (seq s)
+     (cons (first s) [(lz-rec-step (rest s))])
+     [])))
 (lz-rec-step [1 2 3 4])
 ;(1 (2 (3 (4 ()))))
 (class (lz-rec-step [1 2 3 4]))
@@ -81,8 +81,8 @@
 (defn simple-range
   [i limit]
   (lazy-seq
-    (when (< i limit)
-      (cons i (simple-range (inc i) limit)))))
+   (when (< i limit)
+     (cons i (simple-range (inc i) limit)))))
 (simple-range 1 10)
 ;(1 2 3 4 5 6 7 8 9)
 
@@ -136,10 +136,10 @@
     good-enough
     (force expensive)))
 (defer-expensive (delay :cheap)
-                 (delay (do (Thread/sleep 5000) :expensive)))
+  (delay (do (Thread/sleep 5000) :expensive)))
 ;:cheap
 (defer-expensive (delay false)
-                 (delay (do (Thread/sleep 5000) :expensive)))
+  (delay (do (Thread/sleep 5000) :expensive)))
 ;:expensive
 ;delay?可以检测是否是延迟的计算
 (delay? (delay (+ 1 1)))
@@ -187,16 +187,16 @@
 (defn sort-parts
   [work]
   (lazy-seq
-    (loop [[part & parts] work]
-      (if-let [[pivot & xs] (seq part)]
-        (let [smaller? #(< % pivot)]
-          (recur (list*
-                   (filter smaller? xs)
-                   pivot
-                   (remove smaller? xs)
-                   parts)))
-        (when-let [[x & xss] parts]
-          (cons x (sort-parts xss)))))))
+   (loop [[part & parts] work]
+     (if-let [[pivot & xs] (seq part)]
+       (let [smaller? #(< % pivot)]
+         (recur (list*
+                 (filter smaller? xs)
+                 pivot
+                 (remove smaller? xs)
+                 parts)))
+       (when-let [[x & xss] parts]
+         (cons x (sort-parts xss)))))))
 (defn qsort
   [coll]
   (sort-parts (list coll)))

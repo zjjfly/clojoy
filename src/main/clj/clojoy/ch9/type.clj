@@ -14,7 +14,7 @@
 ;这种情况可以使用deftype,它没有默认实现任何接口或抽象类
 
 (deftype InfiniteConstant
-  [i]
+         [i]
   ISeq
   (seq [this]
     (lazy-seq (cons i (seq this)))))

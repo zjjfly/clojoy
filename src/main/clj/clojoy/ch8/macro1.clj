@@ -16,8 +16,8 @@
 ;一个限制binding范围的方法
 (defn context-eval [ctx expr]
   (eval
-    `(let [~@(mapcat (fn [[k v]] [k `'~v]) ctx)]
-       ~expr)))
+   `(let [~@(mapcat (fn [[k v]] [k `'~v]) ctx)]
+      ~expr)))
 (context-eval '{a 1, b 2} '(+ a b))
 ;3
 (context-eval '{a 1, b 2} '(let [b 1000] (+ a b)))
@@ -47,8 +47,8 @@
 (defmacro do-until [& form]
   (let [pred->do (partition 2 form)
         need-do (take-while
-                  #(eval (first %))
-                  pred->do)]
+                 #(eval (first %))
+                 pred->do)]
     (->> (for [[_ todo] need-do]
            todo)
          (cons 'do))))
@@ -65,7 +65,7 @@
           (if (next clauses)
             (second clauses)
             (throw (IllegalArgumentException.
-                     "do until requires an even number of  forms")))
+                    "do until requires an even number of  forms")))
           (cons 'do-until (nnext clauses)))))
 (let [x 1]
   (do-until true (prn 1)
@@ -74,12 +74,12 @@
 ;2
 
 (macroexpand-1 '(do-until
-                  true (prn 1)
-                  false (prn 2)))
+                 true (prn 1)
+                 false (prn 2)))
 
 (walk/macroexpand-all '(do-until
-                         true (prn 1)
-                         false (prn 2)))
+                        true (prn 1)
+                        false (prn 2)))
 ;(if true (do (prn 1) (if false (do (prn 2) nil))))
 
 ;使用语法quote和反quote定义宏,实现一个类似自己的when-no

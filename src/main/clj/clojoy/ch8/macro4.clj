@@ -30,8 +30,8 @@
 
 (let [stream (clj-doc-www)]
   (with-resource [page stream]
-                 .close
-                 (.readLine page)))
+    .close
+    (.readLine page)))
 ;"<!DOCTYPE html>"
 ;可以看出,这两个宏通过让用户显示的传递一个绑定vector来避免使用anaphora,这种方式在clojure中很普遍
 
@@ -64,23 +64,23 @@
   [c]
   (let [args (first c)]
     (list
-      (into '[f] args)
-      (apply merge
-             (for [con (rest c)]
-               (cond
-                 (= (first con) :require) (assoc {} :pre (vec (rest con)))
-                 (= (first con) :ensure) (assoc {} :post (vec (rest con)))
-                 :else (throw (Exception.
-                                (str "Unknown tag "
-                                     (first con)))))))
-      (list* 'f args))))
+     (into '[f] args)
+     (apply merge
+            (for [con (rest c)]
+              (cond
+                (= (first con) :require) (assoc {} :pre (vec (rest con)))
+                (= (first con) :ensure) (assoc {} :post (vec (rest con)))
+                :else (throw (Exception.
+                              (str "Unknown tag "
+                                   (first con)))))))
+     (list* 'f args))))
 
 (contract doubler
           [x]
           (:require
-            (pos? x))
+           (pos? x))
           (:ensure
-            (= (* 2 x) %)))
+           (= (* 2 x) %)))
 (def times2 (partial doubler #(* 2 %)))
 (times2 2)
 ;4
@@ -90,15 +90,15 @@
 (contract doubler
           [x]
           (:require
-            (pos? x))
+           (pos? x))
           (:ensure
-            (= (* 2 x) %))
+           (= (* 2 x) %))
           [x y]
           (:require
-            (pos? x)
-            (pos? y))
+           (pos? x)
+           (pos? y))
           (:ensure
-            (= (* 2 (+ x y)) %)))
+           (= (* 2 (+ x y)) %)))
 ((partial doubler #(* 2 (+ %1 %2))) 2 3)
 ;10
 ((partial doubler #(+ %1 %1 %2 %2)) 2 3)

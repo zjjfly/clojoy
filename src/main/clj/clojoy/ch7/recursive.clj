@@ -1,6 +1,6 @@
 (ns clojoy.ch7.recursive
   (:require
-    [clojoy.utils.assert :as assert]))
+   [clojoy.utils.assert :as assert]))
 
 ;普通递归,显示的调用自身
 (defn pow
@@ -39,7 +39,7 @@
                    (* mag x)))))
           0
           (partition 2 descriptor)                          ;partition的结果就是一个lazy seq
-          ))
+))
 (convert simple-metric [100 :meter])
 ;100
 (convert simple-metric [50 :cm])
@@ -60,26 +60,26 @@
 ;如果不使用trampoline,
 (defn elevator [commands]
   (letfn
-    [(ff-open [[_ & r]]
-       (case _
-         :close (ff-closed r)
-         :done true
-         false))
-     (ff-closed [[_ & r]]
-       (case _
-         :open (ff-open r)
-         :up (sf-closed r)
-         false))
-     (sf-closed [[_ & r]]
-       (case _
-         :down (ff-closed r)
-         :open (sf-open r)
-         false))
-     (sf-open [[_ & r]]
-       (case _
-         :done true
-         :close (sf-closed r)
-         false))]
+   [(ff-open [[_ & r]]
+      (case _
+        :close (ff-closed r)
+        :done true
+        false))
+    (ff-closed [[_ & r]]
+               (case _
+                 :open (ff-open r)
+                 :up (sf-closed r)
+                 false))
+    (sf-closed [[_ & r]]
+               (case _
+                 :down (ff-closed r)
+                 :open (sf-open r)
+                 false))
+    (sf-open [[_ & r]]
+             (case _
+               :done true
+               :close (sf-closed r)
+               false))]
     (ff-open commands)))
 (elevator [:close :open :close :up :open :open :done])
 ;false
@@ -91,26 +91,26 @@
 ;使用trampoline
 (defn elevator [commands]
   (letfn
-    [(ff-open [[_ & r]]
-       #(case _
-          :close (ff-closed r)
-          :done true
-          false))
-     (ff-closed [[_ & r]]
-       #(case _
-          :open (ff-open r)
-          :up (sf-closed r)
-          false))
-     (sf-closed [[_ & r]]
-       #(case _
-          :down (ff-closed r)
-          :open (sf-open r)
-          false))
-     (sf-open [[_ & r]]
-       #(case _
-          :done true
-          :close (sf-closed r)
-          false))]
+   [(ff-open [[_ & r]]
+      #(case _
+         :close (ff-closed r)
+         :done true
+         false))
+    (ff-closed [[_ & r]]
+               #(case _
+                  :open (ff-open r)
+                  :up (sf-closed r)
+                  false))
+    (sf-closed [[_ & r]]
+               #(case _
+                  :down (ff-closed r)
+                  :open (sf-open r)
+                  false))
+    (sf-open [[_ & r]]
+             #(case _
+                :done true
+                :close (sf-closed r)
+                false))]
     (trampoline ff-open commands)))
 (elevator (take 100000 (cycle [:close :open])))
 ;false

@@ -65,7 +65,7 @@
 
 ;union,返回多个集合的交集
 (cset/union #{:humans :fruit-bats :zombies}
-                   #{:chupacabra :zombies :humans})
+            #{:chupacabra :zombies :humans})
 ;#{:chupacabra :zombies :humans :fruit-bats}
 (cset/union #{:pez :gum :dots :skor}
             #{:pez :skor :pocky}

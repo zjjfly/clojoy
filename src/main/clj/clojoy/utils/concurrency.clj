@@ -3,7 +3,7 @@
 
 (def thread-pool
   (Executors/newFixedThreadPool
-    (+ 2 (.availableProcessors (Runtime/getRuntime)))))
+   (+ 2 (.availableProcessors (Runtime/getRuntime)))))
 
 (defn dothreads!
   [f & {thread-count :threads

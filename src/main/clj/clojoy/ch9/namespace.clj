@@ -77,5 +77,4 @@ bonobo/x
   (:use [clojure.test :only (are is)])    ;只复制某些绑定
   (:require (clojure [zip :as z]))        ;和use类似,但是复制过来的符号带有命名空间前缀,或者使用:as指定一个前缀
   (:import (java.util Date)
-           (java.io File))
-  )
+           (java.io File)))

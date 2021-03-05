@@ -40,8 +40,7 @@
 [((complement identity) true)
  ((complement identity) 42)
  ((complement identity) false)
- ((complement identity) nil)
- ]
+ ((complement identity) nil)]
 ;[false false true true]
 ((complement even?) 2)
 ;false
@@ -50,7 +49,7 @@
 (defn join
   {:test (fn []
            (assert
-             (= (join "," [1 2 3]) "1,3,3")))}
+            (= (join "," [1 2 3]) "1,3,3")))}
   [sep s]
   (apply str (interpose sep s)))
 (test/run-tests)
@@ -131,10 +130,8 @@
 ;函数的前置和后置条件
 (defn slope2
   [p1 p2]
-  {
-   :pre [(not= p1 p2) (vector? p1) (vector? p2)]
-   :post [(float? %)]
-   }
+  {:pre [(not= p1 p2) (vector? p1) (vector? p2)]
+   :post [(float? %)]}
   (/ (- (p2 1) (p1 1))
      (- (p2 0) (p1 0))))
 (assert/assert-error AssertionError (slope2 [10 10] [10 10]))

@@ -1,6 +1,6 @@
 (ns clojoy.ch5.map
   (:require
-    [clojoy.utils.assert :as assert]))
+   [clojoy.utils.assert :as assert]))
 
 ;clojure中的map用于存储带名的值,最常见的是hash map,map字面量产生的就是hash map,它是无序的
 ;另一种生成hash map的方法

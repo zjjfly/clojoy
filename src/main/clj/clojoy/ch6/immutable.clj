@@ -22,8 +22,7 @@
                     :R (:R t)}
     :else {:val (:val t)
            :L (:L t)
-           :R (xconj (:R t) v)}
-    ))
+           :R (xconj (:R t) v)}))
 (def tree1 (xconj nil 5))
 tree1
 ;{:val 5, :L nil, :R nil}

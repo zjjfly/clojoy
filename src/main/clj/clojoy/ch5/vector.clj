@@ -1,6 +1,6 @@
 (ns clojoy.ch5.vector
   (:require
-    [clojoy.utils.assert :as assert]))
+   [clojoy.utils.assert :as assert]))
 
 ;vector是clojure中最常用的集合,无论数据量多还是少,它的性能都很好
 ;它更常用的原因大概是clojure中的括号已经够多了吧😹.

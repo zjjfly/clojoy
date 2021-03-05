@@ -97,8 +97,7 @@
    :fixo-pop  (fn [node]
                 (if (:l node)
                   (TreeNode. (:val node) (fixo-pop (:l node)) (:r node))
-                  (:r node)))
-   })
+                  (:r node)))})
 (extend TreeNode FIXO tree-node-fixo)
 (record/xseq (fixo-into (TreeNode. 5 nil nil) [2 4 6 7]))
 ;(2 4 5 6 7)

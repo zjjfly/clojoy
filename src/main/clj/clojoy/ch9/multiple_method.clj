@@ -22,7 +22,7 @@
 
 ;使用这个UDP
 (def cat {:likes-dogs true :ocd-bathing true})
-(def morris (beget {:likes-9lives true} cat ))
+(def morris (beget {:likes-9lives true} cat))
 (def post-traumatic-morris (beget {:likes-dogs nil} morris))
 (get cat :likes-dogs)
 ;true

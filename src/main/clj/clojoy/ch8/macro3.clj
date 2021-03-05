@@ -20,8 +20,8 @@
 ;但我们可以使用宏来实现anaphora,以Arc中的awhen为例子
 (defmacro awhen [exp & body]
   `(let [~'it ~exp] ;~'在语法quote中可以避免被解析为全限定名的var,这就叫selective name capture
-    (when ~'it
-      ~@body)))
+     (when ~'it
+       ~@body)))
 (awhen [1 2 3] (it 2))
 ;3
 (awhen nil (println "Will never get here"))

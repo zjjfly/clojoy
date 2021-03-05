@@ -1,7 +1,6 @@
 (ns clojoy.ch8.macro2
   (:require [clojure.xml :as xml]))
 
-
 ;使用宏改变form
 ;以实现一个描述人和怪兽的战斗情况的宏为例,预期的效果是下面这样的:
 ;(domain man-vs-monster
@@ -62,10 +61,10 @@
   (when props
     {:tag :properties, :attrs nil,
      :content
-          (apply vector (for [p props]
-                          {:tag     :property,
-                           :attrs   {:name (str (first p))},
-                           :content nil}))}))
+     (apply vector (for [p props]
+                     {:tag     :property,
+                      :attrs   {:name (str (first p))},
+                      :content nil}))}))
 
 (def d
   (domain man-vs-monster
@@ -75,7 +74,7 @@
                          "A man, baby" [name] [has-beard?]))
           (grouping monsters
                     (Chupacabra
-                      "A fierce, yet elusive creature" [eats-goats?]))))
+                     "A fierce, yet elusive creature" [eats-goats?]))))
 (:tag d)
 ;:domain
 (:tag (first (:content d)))

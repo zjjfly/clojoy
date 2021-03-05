@@ -20,14 +20,13 @@
 (def initial-board
   [[:- :k :-]
    [:- :- :-]
-   [:- :K :-]
-   ])
+   [:- :K :-]])
 
 (defn board-map
   [f board]
   (vec
-    (map #(vec (for [s %] (f s)))
-         board)))
+   (map #(vec (for [s %] (f s)))
+        board)))
 
 ;初始化棋盘
 (defn reset-board!
@@ -51,7 +50,7 @@
   [[[mover mpos] [_ enemy-pos]]]
   [mover (some #(good-move? % enemy-pos)
                (shuffle (king-moves mpos))                  ;把相邻的格子的顺序打乱,模拟随机选取过程
-               )])
+)])
 
 (reset-board!)
 (take 5 (repeatedly #(choose-move @to-move)))
@@ -73,8 +72,7 @@
   []
   (let [move (choose-move @to-move)]
     (dosync (move-piece move @to-move))
-    (dosync (update-to-move move))
-    ))
+    (dosync (update-to-move move))))
 
 (reset-board!)
 
@@ -122,10 +120,9 @@
 (defn make-move
   []
   (dosync
-    (let [move (choose-move @to-move)]
-      (move-piece move @to-move)
-      (update-to-move move)
-      )))
+   (let [move (choose-move @to-move)]
+     (move-piece move @to-move)
+     (update-to-move move))))
 (reset-board!)
 (dothreads! make-move :threads 100 :times 100)
 (board-map deref board)
@@ -155,9 +152,9 @@
   (let [slow-tries (atom 0)]
     (future
       (dosync
-        (swap! slow-tries inc)
-        (Thread/sleep 200)
-        @r)
+       (swap! slow-tries inc)
+       (Thread/sleep 200)
+       @r)
       (println (format "r is: %s, history: %d, after: %d tries"
                        @r (.getHistoryCount r) @slow-tries)))
     (dotimes [i 500]
