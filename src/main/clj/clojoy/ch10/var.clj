@@ -89,7 +89,7 @@ favorite-color
 ;去掉with-precision会报错
 (a/assert-error
  ArithmeticException
- (/ 1 3))
+ (/ 1 3M))
 
 ;有些函数会让with-precision报错
 ;下面的代码在repl中会报错,因为map是惰性的,在打印的时候才会实际执行,而这个时候已经出了with-precision的动态作用域
