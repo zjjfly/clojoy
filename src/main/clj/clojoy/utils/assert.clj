@@ -8,7 +8,7 @@
              (ex-info (str (.getName ~class) " should be thrown,but it did not!")
                       {:just-for-distinguish true})))
         (catch ExceptionInfo ~'e
-          (if (:just-for-distinguish (.getData ~'e))
+          (if (:just-for-distinguish (ex-data ~'e))
             (throw ~'e)
             (throw (AssertionError. (str (.getName ~class) " should be thrown,not clojure.lang.ExceptionInfo!")))))
         (catch Throwable ~'e
