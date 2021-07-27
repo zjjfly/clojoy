@@ -5,7 +5,8 @@
             :url  "https://www.apache.org/licenses/LICENSE-2.0"}
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [junit/junit "4.12"]
-                 [org.clojure/core.async "1.2.603"]]
+                 [org.clojure/core.async "1.2.603"]
+                 [criterium "0.4.6"]]
   :main ^:skip-aot clojoy.core
   :plugins [[lein-cljfmt "0.5.7"]
             [lein-junit "1.1.8"]]
