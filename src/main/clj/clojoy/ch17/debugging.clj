@@ -97,22 +97,22 @@
 (comment
   (awhen [1 2 3] (it 2))
 
-  debug=> it
+  ;debug=> it
   ;; java.lang.RuntimeException: Unable to resolve symbol: it in this context
 
-  debug=> expr
+  ;debug=> expr
   ;;=> [1 2 3]
 
-  debug=> body
+  ;debug=> body
   ;;=> ((it 2))
 
-  debug=> ::tl
-  debug=> it
+  ;debug=> ::tl
+  ;debug=> it
   ;;=> [1 2 3]
 
-  debug=> (it 1)
+  ;debug=> (it 1)
   ;;=>  2
 
-  debug=> ::tl
+  ;debug=> ::tl
   ;;=> 3
   )
