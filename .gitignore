@@ -4,3 +4,6 @@
 **/.lein-failures
 **/.nrepl-port
 **/*.iml
+.clj-kondo
+.lein-repl-history
+pom.xml
