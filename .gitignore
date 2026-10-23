@@ -7,3 +7,5 @@
 .clj-kondo
 .lein-repl-history
 pom.xml
+.lsp/
+.portal/
